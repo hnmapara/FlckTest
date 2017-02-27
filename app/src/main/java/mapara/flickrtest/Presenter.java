@@ -39,6 +39,15 @@ public class Presenter {
         }
     }
 
+    public void loadMore() {
+        Log.e(TAG, "onLoadMore");
+        PhotoClient.getInstance().getPhotos().add(null);
+        if (mActivityRef != null && !mActivityRef.isFinishing()) {
+            mActivityRef.showLoadingView();
+        }
+        fetchShowNextPage();
+    }
+
     public void cancel() {
         Log.d(TAG, "cancel");
         mActivityRef = null;

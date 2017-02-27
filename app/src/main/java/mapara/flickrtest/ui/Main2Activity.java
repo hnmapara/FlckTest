@@ -10,6 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import mapara.flickrtest.PhotoClient;
@@ -74,7 +76,7 @@ public class Main2Activity extends AppCompatActivity {
                     recyclerView.post(new Runnable() {
                         @Override
                         public void run() {
-                            onLoadMore();
+                            mPresenter.loadMore();
                         }
                     });
                     mIsLoading = true;
@@ -83,13 +85,6 @@ public class Main2Activity extends AppCompatActivity {
                 }
             }
         });
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        //Maintains the recyclerView scroll position even if activity is finished or recreated
-        //PhotosManager.getInstance().setState(mLayoutManager.onSaveInstanceState());
     }
 
     @Override
@@ -106,36 +101,29 @@ public class Main2Activity extends AppCompatActivity {
         mAdapter.notifyDataSetChanged();
     }
 
-    public void onLoadMore() {
-        Log.e(TAG, "onLoadMore");
-        PhotoClient.getInstance().getPhotos().add(null);
+    public void showLoadingView() {
         mAdapter.notifyItemInserted(PhotoClient.getInstance().getPhotos().size() - 1);
-        mPresenter.fetchShowNextPage();
-        /*
-        //Load more data for reyclerview
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Log.e("haint", "Load More 2");
-
-                //Remove loading item
-                mUsers.remove(mUsers.size() - 1);
-                mUserAdapter.notifyItemRemoved(mUsers.size());
-
-                //Load data
-                int index = mUsers.size();
-                int end = index + 20;
-                for (int i = index; i < end; i++) {
-                    User user = new User();
-                    user.setName("Name " + i);
-                    user.setEmail("alibaba" + i + "@gmail.com");
-                    mUsers.add(user);
-                }
-                mUserAdapter.notifyDataSetChanged();
-                mUserAdapter.setLoaded();
-            }
-        }, 5000);
-        */
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }
