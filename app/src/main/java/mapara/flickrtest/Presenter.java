@@ -17,7 +17,10 @@ public class Presenter {
 
     public Presenter(Main2Activity activity) {
         mActivityRef = activity;
-        PhotoClient.getInstance().fetchAsyncPhotosForKeyword("Golden gate", 1, new PhotoClient.IOnFinish() {
+    }
+
+    public void fetchShowNextPage() {
+        PhotoClient.getInstance().fetchAsyncPhotosForKeyword("Golden gate", new PhotoClient.IOnFinish() {
             @Override
             public void onSuccess(boolean isSuccess) {
                 refreshView();
@@ -31,8 +34,7 @@ public class Presenter {
     }
 
     private void refreshView() {
-        //Main2Activity activity = mActivityRef.get();
-        if (mActivityRef != null || !mActivityRef.isFinishing()) {
+        if (mActivityRef != null && !mActivityRef.isFinishing()) {
             mActivityRef.refreshList();
         }
     }

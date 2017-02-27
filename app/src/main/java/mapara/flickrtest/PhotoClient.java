@@ -106,14 +106,19 @@ public class PhotoClient {
         return mList;
     }
 
-    public void fetchAsyncPhotosForKeyword(String key, int page, @Nullable final IOnFinish listener) {
-        Call<PhotosResponseModel> call = mRetrofitService.getPhotos(METHOD_SEARCH_PHOTO, key, page);
+    public void fetchAsyncPhotosForKeyword(String key, @Nullable final IOnFinish listener) {
+        mCurrentPage++;
+        Log.d(TAG, "fetching page : " + mCurrentPage);
+        Call<PhotosResponseModel> call = mRetrofitService.getPhotos(METHOD_SEARCH_PHOTO, key, mCurrentPage);
         call.enqueue(new Callback<PhotosResponseModel>() {
             @Override
             public void onResponse(Call<PhotosResponseModel> call, Response<PhotosResponseModel> response) {
                 if (response.isSuccessful()) {
+                    if (mList.size() != 0 && mList.get(mList.size() -1) == null) {
+                        mList.remove(mList.size()-1);
+                    }
                     mList.addAll(response.body().getPhotos());
-                    Log.e(TAG, "onResponse :" + response.body());
+                    Log.d(TAG, "onResponse :" + response.body());
                     if (listener != null) {
                         listener.onSuccess(true);
                     }
