@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.util.List;
 
@@ -56,7 +57,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         if (holder instanceof PhotoViewHolder) {
             PhotoModel photo = mList.get(position);
             Glide.with(mContext).load(photo.getUrl())
-                    .placeholder(R.drawable.placeholder)
+                    .apply(new RequestOptions().placeholder(R.drawable.placeholder))
                     .into(((PhotoViewHolder)holder).mImage);
         } else if (holder instanceof LoadingViewHolder) {
             LoadingViewHolder loadingViewHolder = (LoadingViewHolder) holder;
