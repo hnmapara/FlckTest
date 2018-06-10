@@ -85,6 +85,7 @@ public class PhotoClient {
         return mInstance;
     }
 
+    // Unused
     @WorkerThread
     public List<PhotoModel> fetchPhotosForKeyWord(String key, int page) {
         if (mCurrentPage >= page) {
@@ -106,6 +107,7 @@ public class PhotoClient {
         return mList;
     }
 
+    // Unused
     public void fetchAsyncPhotosForKeyword(String key, @Nullable final IOnFinish listener) {
         mCurrentPage++;
         Log.d(TAG, "fetching page : " + mCurrentPage);
@@ -137,6 +139,7 @@ public class PhotoClient {
         });
     }
 
+    // Unused
     private void enqueueRequestAndHandle(Call<PhotosResponseModel> call) {
         /*
         call.subscribeOn(Schedulers.io())
@@ -164,5 +167,22 @@ public class PhotoClient {
                     }
                 });
          */
+    }
+
+    @WorkerThread
+    @Nullable
+    public List<PhotoModel> fetchPhotos(String keyword, int page) {
+        Call<PhotosResponseModel> call = mRetrofitService.getPhotos(METHOD_SEARCH_PHOTO, keyword, page);
+        try {
+            Response<PhotosResponseModel> response = call.execute();
+            if (response.isSuccessful()) {
+                return response.body().getPhotos();
+            } else {
+                Log.e(TAG, "fetchPhotos : "+ response.message());
+            }
+        } catch (IOException e) {
+            Log.e(TAG, "fetchPhotos : ",e);
+        }
+        return null;
     }
 }
