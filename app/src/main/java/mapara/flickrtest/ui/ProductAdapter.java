@@ -1,9 +1,11 @@
 package mapara.flickrtest.ui;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.util.DiffUtil;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.RecyclerView;
+
+import android.os.Trace;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +15,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import mapara.flickrtest.Model.PhotoModel;
@@ -36,23 +35,26 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     @NonNull
     @Override
     public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        Trace.beginSection("PROADAPTER_ONCREATEVIEWHOLDER");
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.thumbnail_view, parent, false);
         final ProductViewHolder pdViewHolder =  new ProductViewHolder(view);
         view.setOnClickListener(v -> {
             mClickCallback.onClick(mProductList.get(pdViewHolder.getAdapterPosition()));
         });
+        Trace.endSection();
         return pdViewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
+        Trace.beginSection("PROADAPTER_ONBINDVIEWHOLDER");
         PhotoModel photo = mProductList.get(position);
 //        holder.textView.setText(photo.getId());
 
         Glide.with(holder.itemView.getContext()).load(photo.getUrl())
                 .apply(new RequestOptions().placeholder(R.drawable.placeholder))
                 .into(holder.imageView);
-
+        Trace.endSection();
     }
 
     @Override
