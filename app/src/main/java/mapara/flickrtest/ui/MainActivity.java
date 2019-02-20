@@ -1,17 +1,21 @@
 package mapara.flickrtest.ui;
 
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+import android.os.Trace;
+
+import androidx.appcompat.widget.Toolbar;
 
 import mapara.flickrtest.Model.PhotoModel;
+import mapara.flickrtest.PhotoClient;
 import mapara.flickrtest.R;
 
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Trace.beginSection("FLKTESTACTIVITY_ONCREATE");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
@@ -19,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
             ProductListFragment listFragment = new ProductListFragment();
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, listFragment, ProductListFragment.TAG).commit();
         }
+        PhotoClient.getInstance().setMemoryLeak(this);
+        Trace.endSection();
     }
 
     public void show(@NonNull PhotoModel product) {

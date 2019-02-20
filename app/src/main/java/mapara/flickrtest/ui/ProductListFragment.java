@@ -1,18 +1,19 @@
 package mapara.flickrtest.ui;
 
 
-import android.arch.lifecycle.Lifecycle;
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProvider;
-import android.arch.lifecycle.ViewModelProviders;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import com.google.android.material.snackbar.Snackbar;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import android.os.Trace;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,7 @@ public class ProductListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Trace.beginSection("PRODUCTLIST_ONCREATEVIEW");
         View view = inflater.inflate(R.layout.list_fragment, container, false);
         mProgressbar = view.findViewById(R.id.progress_bar);
         RecyclerView recyclerView = view.findViewById(R.id.products_list);
@@ -62,6 +64,7 @@ public class ProductListFragment extends Fragment {
 
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setAdapter(mProductAdapter);
+        Trace.endSection();
         return view;
     }
 

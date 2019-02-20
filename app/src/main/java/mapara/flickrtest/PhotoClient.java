@@ -1,7 +1,9 @@
 package mapara.flickrtest;
 
-import android.support.annotation.Nullable;
-import android.support.annotation.WorkerThread;
+import androidx.annotation.Nullable;
+import androidx.annotation.WorkerThread;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.util.Log;
 
 import java.io.IOException;
@@ -184,5 +186,10 @@ public class PhotoClient {
             Log.e(TAG, "fetchPhotos : ",e);
         }
         return null;
+    }
+
+    AppCompatActivity mLeakedActivity = null;
+    public void setMemoryLeak(AppCompatActivity activity) {
+        mLeakedActivity = activity;
     }
 }

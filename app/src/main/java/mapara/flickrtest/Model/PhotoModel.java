@@ -11,7 +11,7 @@ public class PhotoModel {
      { "id": "30142020893", "owner": "62544885@N04", "secret": "8f00297228", "server": "5739",
      "farm": 6, "title": "細蓉. #canton #cantonesefood #food", "ispublic": 1, "isfriend": 0, "isfamily": 0 }
      */
-    private static final String mUrl = "http://farm%s.static.flickr.com/%s/%s_%s_%s.jpg";
+    private static final String mUrl = "https://farm%s.static.flickr.com/%s/%s_%s_%s.jpg";
     private static final String thumbnail_prefix = "t";
     private static final String original_prefix = "b";
 
